@@ -1,24 +1,34 @@
-function Pac () {
-  this.x = 300;
-  this.y = 300;
+function Pac (x, y) {
+  this.x = x + kastlen / 2;
+  this.y = y + kastlen / 2;
   this.speed = 2;
-  this.diameter = 25;
+  this.diameter = kastlen-15;
+
 
 
   this.update = function() {
-    if (keyIsDown(87)) {
+    for (wand of wands) {
+      wand.coll()
+    }
+    console.log(checku);
+    if (keyIsDown(87) && checku == false) {
       this.moveUp();
     }
-    else if (keyIsDown(83)) {
+    else if (keyIsDown(83 ) && checkd == false) {
       this.moveDown();
     }
-    else if (keyIsDown(65)) {
+    else if (keyIsDown(65) && checkl == false) {
       this.moveLeft();
     }
-    else if (keyIsDown(68)) {
+    else if (keyIsDown(68) && checkr == false) {
       this.moveRight();
     }
+    checku = false;
+    checkl = false;
+    checkr = false;
+    checkd = false;
   }
+
   this.moveUp = function() {
     this.y -= this.speed;
   }
