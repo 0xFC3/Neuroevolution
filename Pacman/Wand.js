@@ -6,16 +6,16 @@ function Wand (x, y) {
 
   this.coll = function () {
 
-    if (this.x < pac.x - this.diameter && this.x + this.len > pac.x - this.diameter) {
+    if (this.x < pac.x - pac.diameter /2 && this.x + this.len > pac.x - pac.diameter/2 && this.y < pac.y && this.y + this.len > pac. y) {
       checkl = true;
     }
-    if (this.y < pac.y - this.diameter && this.y + this.len > pac. y - this.diameter) {
+    if (this.y < pac.y - pac.diameter/2 && this.y + this.len > pac. y - pac.diameter/2 && this.x < pac.x && this.x + this.len > pac.x ) {
       checku = true;
     }
-    if (this.x < pac.x + this.diameter && this.x + this.len > pac.x + this.diameter) {
+    if (this.x < pac.x + pac.diameter/2 && this.x + this.len > pac.x + pac.diameter/2 && this.y < pac.y && this.y + this.len > pac. y) {
       checkr = true;
     }
-    if (this.y < pac.y + this.diameter && this.y + this.len > pac. y + this.diameter) {
+    if (this.y < pac.y + pac.diameter/2 && this.y + this.len > pac. y + pac.diameter/2 && this.x < pac.x && this.x + this.len > pac.x) {
       checkd = true;
     }
   }

@@ -1,16 +1,29 @@
 var pac;
 var wands = [];
 var essen = [];
+var gamestart = false;
 const kastlen = 50;
 let checku = false;
 let checkl = false;
 let checkr = false;
 let checkd = false;
 
-var level1 = [[1,1,1,1,1], [1,0,2,0,1]]
+var level1 = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+              [1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
 
 function setup() {
   createCanvas(800, 600);
+  background(0);
   let x = 0;
   let y = 0;
   for (row of level1) {
@@ -42,11 +55,22 @@ function draw() {
  background(0);
  pac.update();
  pac.display();
+
  for (wand of wands) {
    wand.display();
  }
+ let i = 0;
  for (kirsche of essen) {
+   kirsche.coll(i);
    kirsche.display();
+   i++;
  }
+ if (essen.length == 0) {
+   reset()
+ }
+
+}
+
+function reset() {
 
 }

@@ -2,7 +2,7 @@ function Pac (x, y) {
   this.x = x + kastlen / 2;
   this.y = y + kastlen / 2;
   this.speed = 2;
-  this.diameter = kastlen-15;
+  this.diameter = kastlen-5;
 
 
 
@@ -10,7 +10,6 @@ function Pac (x, y) {
     for (wand of wands) {
       wand.coll()
     }
-    console.log(checku);
     if (keyIsDown(87) && checku == false) {
       this.moveUp();
     }
