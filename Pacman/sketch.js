@@ -24,6 +24,53 @@ var level1 = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 function setup() {
   createCanvas(800, 600);
   background(0);
+  buildGame();
+
+
+
+}
+
+function draw() {
+  if (gamestart == true) {
+    background(0);
+    pac.update();
+    pac.display();
+
+    for (wand of wands) {
+      wand.display();
+    }
+    let i = 0;
+    for (kirsche of essen) {
+      kirsche.coll(i);
+      kirsche.display();
+      i++;
+    }
+    if (essen.length == 0) {
+      reset()
+    }
+  }
+
+
+}
+function keyPressed () {
+  if (keyCode === RIGHT_ARROW) {
+    gamestart = true;
+  }
+}
+
+function reset() {
+  
+}
+
+function gameOver() {
+  gamestart = false;
+  essen = [];
+  wands = [];
+  buildGame();
+
+}
+
+function buildGame() {
   let x = 0;
   let y = 0;
   for (row of level1) {
@@ -47,30 +94,4 @@ function setup() {
 
 
   }
-
-
-}
-
-function draw() {
- background(0);
- pac.update();
- pac.display();
-
- for (wand of wands) {
-   wand.display();
- }
- let i = 0;
- for (kirsche of essen) {
-   kirsche.coll(i);
-   kirsche.display();
-   i++;
- }
- if (essen.length == 0) {
-   reset()
- }
-
-}
-
-function reset() {
-
 }
