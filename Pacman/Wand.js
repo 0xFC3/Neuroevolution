@@ -6,16 +6,16 @@ function Wand (x, y) {
 
   this.coll = function () {
 
-    if (this.x < pac.x - pac.diameter /2 && this.x + this.len > pac.x - pac.diameter/2 && this.y < pac.y && this.y + this.len > pac. y) {
+    if (this.x < pac.x - buffer && this.x + this.len > pac.x - buffer && this.y - kastlen /2 < pac.y && this.y + this.len + kastlen /2 > pac. y) {
       checkl = true;
     }
-    if (this.y < pac.y - pac.diameter/2 && this.y + this.len > pac. y - pac.diameter/2 && this.x < pac.x && this.x + this.len > pac.x ) {
+    if (this.y < pac.y - buffer && this.y + this.len > pac. y - buffer && this.x - kastlen /2 < pac.x && this.x + this.len + kastlen /2 > pac.x ) {
       checku = true;
     }
-    if (this.x < pac.x + pac.diameter/2 && this.x + this.len > pac.x + pac.diameter/2 && this.y < pac.y && this.y + this.len > pac. y) {
+    if (this.x < pac.x + buffer && this.x + this.len > pac.x + buffer && this.y - kastlen /2 < pac.y && this.y + this.len + kastlen /2 > pac. y) {
       checkr = true;
     }
-    if (this.y < pac.y + pac.diameter/2 && this.y + this.len > pac. y + pac.diameter/2 && this.x < pac.x && this.x + this.len > pac.x) {
+    if (this.y < pac.y + buffer && this.y + this.len > pac. y + buffer && this.x - kastlen /2 < pac.x && this.x + this.len + kastlen /2 > pac.x) {
       checkd = true;
     }
   }
