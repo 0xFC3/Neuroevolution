@@ -6,9 +6,7 @@ function Pac (x, y) {
 
 
   this.update = function() {
-    for (wand of wands) {
-      wand.coll()
-    }
+
     if (keyIsDown(87)) {
       direction = 0;
     }
@@ -22,22 +20,11 @@ function Pac (x, y) {
       direction = 1;
     }
 
+    freespacesplayer = findFreespaces(pac);
 
-    if (checkd == false) {
-      freespaces.push(2);
-    }
-    if (checku == false) {
-      freespaces.push(0);
-    }
-    if (checkr == false) {
-      freespaces.push(1);
-    }
-    if (checkl == false) {
-      freespaces.push(3);
-    }
-    console.log(freespaces);
 
-    for (element of freespaces) {
+
+    for (element of freespacesplayer) {
       if (direction == element) {
         olddir = direction;
       }
@@ -60,11 +47,8 @@ function Pac (x, y) {
       }
     }
 
-    freespaces = [];
-    checkd = false;
-    checku = false;
-    checkl = false;
-    checkr = false;
+    freespacesplayer = [];
+
     stuck = true;
   }
 
