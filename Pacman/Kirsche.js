@@ -7,6 +7,8 @@ function Kirsche (x, y) {
   this.coll = function(ind) {
     if (this.x < pac.x + this.buf && this.x > pac.x - this.buf && this.y < pac.y + this.buf && this.y > pac.y - this.buf) {
       essen.splice(ind, 1);
+
+      pac.score += 1;
     }
   }
 

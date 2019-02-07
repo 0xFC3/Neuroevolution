@@ -1,4 +1,5 @@
-var pac; //player
+var pac;
+var genAn;
 var wands = []; //walls
 var essen = []; //food
 var monsters = []; //monster
@@ -20,6 +21,12 @@ let lives = 3; //lives of the player
 let boostMode = false; //is activated when player eats boost thing
 let boostduration = 0;
 
+//AI stuff
+const TOTAL = 5;
+var savedPacs = [];
+var bestPac;
+var slider;
+
 
 var level1 = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
               [1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,1],
@@ -37,8 +44,12 @@ var level1 = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 function setup() {
   createCanvas(800, 600);
   background(0);
+  genAn = new genanzeige();
+  slider = createSlider(1, 500, 1);
   buildGame();
   textSize(32);
+
+
 
 
 
@@ -46,66 +57,82 @@ function setup() {
 
 function draw() {
   if (gamestart == true) {
+    for (let i = 0; i < slider.value(); i++) {
+
+
+      pac.think(monsters, wands, essen);
+      pac.update();
+
+
+
+
+      let z = 0;
+      for (boost of boosts) {
+        boost.coll(z)
+        z++;
+      }
+      info();
+      let i = 0;
+      for (kirsche of essen) {
+        kirsche.coll(i);
+        i++;
+      }
+      i = 0;
+      for (monster of monsters) {
+        monster.update(monster);
+        if (monster.coll() == true && lives != 1) {
+          if (boostMode == true) {
+            monsters.splice(i, 1);
+          }
+          else {
+            reset();
+          }
+        }
+        else if (monster.coll() == true && lives == 1) {
+          if (boostMode == true) {
+            monsters.splice(i, 1);
+          }
+          else {
+            gameOver();
+          }
+        }
+        i++;
+      }
+      if (essen.length == 0) {
+        gameOver();
+      }
+      if (boostMode == true) {
+        boostduration++;
+      }
+      if (boostduration == 300) {
+        boostMode = false;
+        boostduration =0;
+      }
+
+
+    }
     background(0);
-    pac.update();
     pac.display();
-
-
     for (wand of wands) {
       wand.display();
     }
-    let z = 0;
-    for (boost of boosts) {
-      boost.coll(z)
-      boost.display();
-      z++;
-    }
+    genAn.display();
     info();
-    let i = 0;
+    for (boost of boosts) {
+      boost.display();
+    }
     for (kirsche of essen) {
-      kirsche.coll(i);
       kirsche.display();
-      i++;
     }
-    i = 0;
     for (monster of monsters) {
-      monster.update(monster);
-      if (monster.coll() == true && lives != 1) {
-        if (boostMode == true) {
-          monsters.splice(i, 1);
-        }
-        else {
-          reset();
-        }
-      }
-      else if (monster.coll() == true && lives == 1) {
-        if (boostMode == true) {
-          monsters.splice(i, 1);
-        }
-        else {
-          gameOver();
-        }
-      }
       monster.display();
-      i++;
     }
-    if (essen.length == 0) {
-      gameOver();
     }
-    if (boostMode == true) {
-      boostduration++;
+    else {
+      fill(255);
+      textSize(50);
+      text("To start game, press RA", 140, 280);
     }
-    if (boostduration == 300) {
-      boostMode = false;
-      boostduration =0;
-    }
-
-  }
-  else {
-    fill(255);
-    textSize(50);
-    text("To start game, press RA", 140, 280);
-  }
 
 }
 function keyPressed () {
@@ -124,7 +151,8 @@ function reset() {
 
     for (column of row) {
       if (column == 2) {
-        pac = new Pac(x, y);
+        pac.x = x + kastlen / 2;
+        pac.y = y + kastlen / 2;
       }
       else if (column == 3) {
         var newm = new Monster(x, y);
@@ -141,13 +169,16 @@ function reset() {
 }
 
 function gameOver() {
-  gamestart = false;
   essen = [];
   wands = [];
   monsters = [];
   boosts = [];
   boostMode = false;
   lives = 3;
+  savedPacs.push(pac);
+  if (savedPacs.length == TOTAL) {
+    nextGeneration();
+  }
   buildGame();
 
 }
@@ -163,7 +194,13 @@ function buildGame() {
         wands.push(neww);
       }
       else if (column == 2) {
-        pac = new Pac(x, y);
+        if (genAn.gen == 0) {
+          pac = new Pac(x,y);
+        }
+        else {
+          pac = new Pac(x,y,bestPac.brain);
+        }
+
       }
       else if (column == 0) {
         var newe = new Kirsche(x, y);
